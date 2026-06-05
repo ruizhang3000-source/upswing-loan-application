@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Upswing Capital Client Application Portal V3</title>
+<style>
+:root{
+  --black:#101010;--white:#fff;--bg:#f4f4f4;--card:#fff;--line:#ddd;--muted:#666;
+  --success:#2e7d32;--warning:#f9a825;--danger:#c62828;--blue:#263238;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Microsoft YaHei","PingFang SC",sans-serif;background:var(--bg);color:var(--black)}
+header{background:var(--black);color:var(--white);padding:26px 34px}
+.header-inner{max-width:1220px;margin:auto;display:flex;justify-content:space-between;gap:20px;align-items:center}
+h1{margin:0;font-size:28px}
+.subtitle{margin:8px 0 0;color:#ddd;font-size:15px}
+.version{background:#fff;color:#111;border-radius:999px;padding:5px 10px;font-weight:bold;font-size:12px}
+.container{max-width:1220px;margin:24px auto;padding:0 18px}
+.hero{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;margin-bottom:18px}
+.hero h2{margin:0 0 8px;font-size:26px}
+.hero p{color:#444;line-height:1.5}
+.notice{background:#fff7e0;border:1px solid #f0d27a;color:#4d3700;padding:14px;border-radius:12px;margin:12px 0}
+.toolbar{position:sticky;top:0;background:rgba(244,244,244,.96);z-index:50;padding:10px 0;border-bottom:1px solid var(--line)}
+button{border:0;background:#111;color:white;border-radius:9px;padding:11px 14px;margin:4px;cursor:pointer;font-weight:600}
+button.secondary{background:#555}
+button.success{background:var(--success)}
+button.light{background:#fff;color:#111;border:1px solid #bbb}
+button:disabled{opacity:.45;cursor:not-allowed}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.section{display:none}
+.section.active{display:block}
+h2.section-title{font-size:23px;margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+h3{font-size:17px;margin:22px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}
+input,select,textarea{width:100%;border:1px solid #ccc;border-radius:9px;padding:10px;background:#fff;font-size:14px}
+textarea{min-height:88px;resize:vertical}
+.required label:after{content:" *";color:var(--danger)}
+.stepper{display:grid;grid-template-columns:repeat(11,1fr);gap:6px;margin:12px 0 18px}
+.step{background:#fff;border:1px solid #ccc;border-radius:12px;padding:10px 6px;text-align:center;font-size:12px;cursor:pointer}
+.step.active{background:#111;color:#fff;border-color:#111}
+.step.done{border-color:var(--success);color:var(--success)}
+.progress-wrap{background:#ddd;border-radius:999px;overflow:hidden;height:12px}
+.progress-bar{height:12px;background:#111;width:0%;transition:.25s}
+.progress-label{font-size:13px;color:#555;margin-top:6px}
+.dashboard{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:14px 0}
+.metric{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.metric span{font-size:12px;color:var(--muted)}
+.metric strong{display:block;font-size:20px;margin-top:7px}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f0f0f0;font-size:13px}
+td input,td select{border:0;border-radius:0;padding:6px}
+.nav-buttons{display:flex;justify-content:space-between;margin:22px 0}
+.filebox{border:2px dashed #bbb;border-radius:14px;padding:18px;background:#fafafa;text-align:center}
+.checkgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.checkitem{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.review-box{background:#fafafa;border:1px solid var(--line);border-radius:12px;padding:14px;white-space:pre-wrap;font-family:Arial}
+.small{font-size:12px;color:#666}
+.lang-pill{display:inline-block;border:1px solid #aaa;border-radius:999px;padding:4px 9px;margin-left:8px;font-size:12px}
+@media(max-width:950px){
+ .grid,.grid2,.dashboard,.checkgrid{grid-template-columns:1fr}
+ .stepper{grid-template-columns:repeat(2,1fr)}
+ .header-inner{display:block}
+}
+@media print{
+ .toolbar,.stepper,.nav-buttons,button,.hero,.notice{display:none!important}
+ .section{display:block!important}
+ body{background:#fff}
+ .card{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div>
+      <h1>Upswing Capital Client Application Portal <span class="version">V3</span></h1>
+      <p class="subtitle">Mortgage application, document collection, broker summary and lender-ready export / 贷款申请、材料收集、经纪人摘要与 lender-ready 导出</p>
+    </div>
+    <div class="small">apply.upswingcap.com.au</div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="hero">
+    <h2>Welcome to Upswing Capital <span class="lang-pill">中英双语</span></h2>
+    <p>Your application should take approximately <b>10–15 minutes</b>. You can save your draft and return later. Please enter information as accurately as possible so your broker can prepare your lender submission package.</p>
+    <p>欢迎使用 Upswing Capital 贷款申请系统。本表格约需 <b>10–15分钟</b> 完成。您可以保存草稿后继续填写。资料越完整，经纪人越容易为您准备贷款申请材料。</p>
+  </div>
+
+  <div class="toolbar">
+    <button onclick="saveDraft()" type="button">Save Draft / 保存草稿</button>
+    <button class="secondary" onclick="loadDraft()" type="button">Load Draft / 读取草稿</button>
+    <button onclick="downloadJSON()" type="button">Export JSON / 导出申请资料</button>
+    <button onclick="downloadBrokerSummary()" type="button">Export Broker Summary / 导出经纪人摘要</button>
+    <button class="success" onclick="submitPackage()" type="button">Submit / 提交</button>
+    <button class="light" onclick="window.print()" type="button">Print PDF / 打印PDF</button>
+  </div>
+
+  <div class="notice">
+    <b>Important / 重要:</b> This version saves drafts in the client’s browser and exports a submission package. To save directly into Microsoft 365, connect the webhook URL in the script section marked <b>POWER_AUTOMATE_WEBHOOK_URL</b>.
+  </div>
+
+  <div class="dashboard">
+    <div class="metric"><span>Status / 状态</span><strong id="dashStatus">Draft</strong></div>
+    <div class="metric"><span>Progress / 进度</span><strong id="dashProgress">0%</strong></div>
+    <div class="metric"><span>Documents / 文件</span><strong id="dashDocs">0/8</strong></div>
+    <div class="metric"><span>Net Worth / 净资产</span><strong id="dashNetWorth">$0</strong></div>
+    <div class="metric"><span>Estimated LVR / 估算LVR</span><strong id="dashLvr">0%</strong></div>
+  </div>
+
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="progress-label" id="progressLabel">0% complete / 已完成 0%</div>
+
+  <div class="stepper" id="stepper"></div>
+
+  <form id="loanForm">
+
+    <section class="card section active" data-title="Control / 控制">
+      <h2 class="section-title">1. Application Control / 申请控制</h2>
+      <div class="grid">
+        <div class="required"><label>Application Number / 申请编号</label><input name="application_number" value="UC-2026-0001"></div>
+        <div><label>Application Status / 申请状态</label><select name="application_status"><option>New Lead / 新客户</option><option>In Progress / 处理中</option><option>Documents Pending / 等待材料</option><option>Ready for Submission / 可提交</option><option>Submitted / 已提交</option></select></div>
+        <div><label>Broker / 经纪人</label><input name="broker" value="Rui Zhang - Upswing Capital"></div>
+        <div><label>Created Date / 创建日期</label><input type="date" name="created_date"></div>
+        <div><label>Preferred Contact Language / 首选语言</label><select name="language"><option>English</option><option>中文</option><option>English + 中文</option></select></div>
+        <div><label>Client Source / 客户来源</label><input name="client_source"></div>
+      </div>
+    </section>
+
+    <section class="card section" data-title="Loan / 贷款">
+      <h2 class="section-title">2. Loan Objective / 贷款目标</h2>
+      <div class="grid">
+        <div class="required"><label>Loan Purpose / 贷款用途</label><select name="loan_purpose"><option></option><option>Purchase / 购房</option><option>Refinance / 转贷</option><option>Equity Release / 释放净值</option><option>Construction / 建房</option><option>Commercial / 商业贷款</option><option>SMSF / 自管养老金贷款</option><option>Debt Consolidation / 债务整合</option></select></div>
+        <div class="required"><label>Requested Loan Amount / 申请贷款金额</label><input type="number" name="requested_loan_amount" class="money calc"></div>
+        <div><label>Property Purpose / 房产用途</label><select name="property_purpose"><option></option><option>Owner Occupied / 自住</option><option>Investment / 投资</option><option>Mixed / 混合</option></select></div>
+        <div><label>Repayment Preference / 还款偏好</label><select name="repayment_preference"><option></option><option>Principal & Interest / 本息同还</option><option>Interest Only / 只还利息</option><option>Split / 混合</option></select></div>
+        <div><label>Rate Preference / 利率偏好</label><select name="rate_preference"><option></option><option>Variable / 浮动</option><option>Fixed / 固定</option><option>Split / 混合</option></select></div>
+        <div><label>Target Lender / 目标贷款机构</label><input name="target_lender"></div>
+      </div>
+      <label>Client objectives / 客户目标、需求和优先事项</label><textarea name="client_objectives"></textarea>
+    </section>
+
+    <section class="card section" data-title="Applicants / 申请人">
+      <h2 class="section-title">3. Applicant Details / 申请人资料</h2>
+      <h3>Applicant 1 / 申请人1</h3>
+      <div class="grid">
+        <div class="required"><label>Full Name / 姓名</label><input name="a1_name"></div>
+        <div class="required"><label>Date of Birth / 出生日期</label><input type="date" name="a1_dob"></div>
+        <div><label>Marital Status / 婚姻状况</label><select name="a1_marital"><option></option><option>Single / 单身</option><option>Married / 已婚</option><option>De facto / 同居伴侣</option><option>Divorced / 离异</option></select></div>
+        <div class="required"><label>Mobile / 手机</label><input name="a1_mobile"></div>
+        <div class="required"><label>Email / 邮箱</label><input type="email" name="a1_email"></div>
+        <div><label>Residency / 居留身份</label><select name="a1_residency"><option></option><option>Australian Citizen / 澳洲公民</option><option>Permanent Resident / 永居</option><option>Temporary Visa / 临时签证</option><option>Foreign Citizen / 外籍</option></select></div>
+        <div><label>Current Address / 现居地址</label><input name="a1_address"></div>
+        <div><label>Dependants / 受抚养人数</label><input type="number" name="a1_dependants"></div>
+        <div><label>Driver Licence / 驾照</label><input name="a1_licence"></div>
+      </div>
+      <h3>Applicant 2 / 申请人2</h3>
+      <div class="grid">
+        <div><label>Full Name / 姓名</label><input name="a2_name"></div>
+        <div><label>Date of Birth / 出生日期</label><input type="date" name="a2_dob"></div>
+        <div><label>Mobile / 手机</label><input name="a2_mobile"></div>
+        <div><label>Email / 邮箱</label><input type="email" name="a2_email"></div>
+        <div><label>Residency / 居留身份</label><input name="a2_residency"></div>
+        <div><label>Relationship / 与申请人1关系</label><input name="a2_relationship"></div>
+      </div>
+    </section>
+
+    <section class="card section" data-title="Income / 收入">
+      <h2 class="section-title">4. Employment & Income / 工作与收入</h2>
+      <div class="grid">
+        <div><label>Applicant 1 Employment Type / 申请人1雇佣类型</label><select name="a1_emp_type"><option></option><option>PAYG / 雇员</option><option>Self-employed / 自雇</option><option>Company Director / 公司董事</option><option>Contractor / 合同工</option><option>Casual / 临时工</option><option>Retired / 退休</option></select></div>
+        <div><label>Applicant 1 Employer / Business / 雇主或公司</label><input name="a1_employer"></div>
+        <div><label>Applicant 1 Occupation / 职位</label><input name="a1_occupation"></div>
+        <div><label>Applicant 2 Employment Type / 申请人2雇佣类型</label><input name="a2_emp_type"></div>
+        <div><label>Applicant 2 Employer / Business / 雇主或公司</label><input name="a2_employer"></div>
+        <div><label>Applicant 2 Occupation / 职位</label><input name="a2_occupation"></div>
+      </div>
+      <h3>Income Items / 收入明细</h3>
+      <table id="incomeTable"><thead><tr><th>Type / 类型</th><th>Owner / 所属人</th><th>Annual Amount / 年金额</th><th>Notes / 备注</th><th></th></tr></thead><tbody></tbody></table>
+      <button type="button" onclick="addRow('incomeTable',['income_type','income_owner','income_amount','income_notes'])">+ Add Income / 添加收入</button>
+    </section>
+
+    <section class="card section" data-title="Assets / 资产">
+      <h2 class="section-title">5. Assets / 资产</h2>
+      <table id="assetTable"><thead><tr><th>Asset Type / 资产类型</th><th>Description / 描述</th><th>Value / 价值</th><th>Ownership / 所属</th><th></th></tr></thead><tbody></tbody></table>
+      <button type="button" onclick="addRow('assetTable',['asset_type','asset_desc','asset_value','asset_owner'])">+ Add Asset / 添加资产</button>
+    </section>
+
+    <section class="card section" data-title="Liabilities / 负债">
+      <h2 class="section-title">6. Liabilities / 负债</h2>
+      <table id="liabilityTable"><thead><tr><th>Type / 类型</th><th>Lender / 机构</th><th>Limit / 额度</th><th>Balance / 余额</th><th>Monthly Repayment / 月供</th><th></th></tr></thead><tbody></tbody></table>
+      <button type="button" onclick="addRow('liabilityTable',['liab_type','liab_lender','liab_limit','liab_balance','liab_repayment'])">+ Add Liability / 添加负债</button>
+    </section>
+
+    <section class="card section" data-title="Expenses / 支出">
+      <h2 class="section-title">7. Living Expenses / 生活支出</h2>
+      <table id="expenseTable"><thead><tr><th>Category / 类别</th><th>Monthly Amount / 月金额</th><th>Notes / 备注</th><th></th></tr></thead><tbody></tbody></table>
+      <button type="button" onclick="addRow('expenseTable',['expense_category','expense_amount','expense_notes'])">+ Add Expense / 添加支出</button>
+    </section>
+
+    <section class="card section" data-title="Property / 物业">
+      <h2 class="section-title">8. Security Property / 抵押物业</h2>
+      <table id="securityTable"><thead><tr><th>Address / 地址</th><th>Type / 类型</th><th>Use / 用途</th><th>Estimated Value / 估值</th><th>Existing Debt / 现有贷款</th><th></th></tr></thead><tbody></tbody></table>
+      <button type="button" onclick="addRow('securityTable',['sec_address','sec_type','sec_use','sec_value','sec_debt'])">+ Add Property / 添加物业</button>
+      <h3>Funding Worksheet / 资金用途表</h3>
+      <div class="grid">
+        <div><label>Purchase Price / 购买价</label><input type="number" name="purchase_price" class="calc"></div>
+        <div><label>Stamp Duty / 印花税</label><input type="number" name="stamp_duty" class="calc"></div>
+        <div><label>Legal / 律师费</label><input type="number" name="legal_cost" class="calc"></div>
+        <div><label>Other Costs / 其他费用</label><input type="number" name="other_costs" class="calc"></div>
+        <div><label>Client Contribution / 客户自有资金</label><input type="number" name="client_contribution" class="calc"></div>
+        <div><label>Proposed Loan / 贷款金额</label><input type="number" name="proposed_loan" class="calc"></div>
+      </div>
+    </section>
+
+    <section class="card section" data-title="Documents / 文件">
+      <h2 class="section-title">9. Documents / 材料上传</h2>
+      <div class="checkgrid">
+        <div class="checkitem"><label><input type="checkbox" name="doc_id"> ID / 身份证件</label></div>
+        <div class="checkitem"><label><input type="checkbox" name="doc_payslip"> Payslips / 工资单</label></div>
+        <div class="checkitem"><label><input type="checkbox" name="doc_bank"> Bank Statements / 银行流水</label></div>
+        <div class="checkitem"><label><input type="checkbox" name="doc_tax"> Tax Returns / 税表</label></div>
+        <div class="checkitem"><label><input type="checkbox" name="doc_financials"> Company Financials / 公司财报</label></div>
+        <div class="checkitem"><label><input type="checkbox" name="doc_bas"> BAS / GST申报</label></div>
+        <div class="checkitem"><label><input type="checkbox" name="doc_rental"> Rental Statements / 租金证明</label></div>
+        <div class="checkitem"><label><input type="checkbox" name="doc_contract"> Contract of Sale / 购房合同</label></div>
+      </div>
+      <h3>Upload Placeholder / 上传区域</h3>
+      <div class="filebox">
+        <input type="file" multiple name="uploads">
+        <p class="small">In production, connect this to SharePoint Document Library via Microsoft Power Automate. / 正式版本建议连接 Microsoft 365 SharePoint 文件库。</p>
+      </div>
+      <label>Additional documents required / 其他需要的材料</label><textarea name="additional_docs"></textarea>
+    </section>
+
+    <section class="card section" data-title="Compliance / 合规">
+      <h2 class="section-title">10. Broker Notes & Compliance / 经纪人备注与合规</h2>
+      <label>Best Interest Duty notes / 客户最佳利益义务记录</label><textarea name="bid_notes"></textarea>
+      <label>Why this product/lender is suitable / 为什么该产品或贷款机构适合客户</label><textarea name="suitability_notes"></textarea>
+      <label>Risks, disadvantages and client discussion / 风险、缺点和客户讨论记录</label><textarea name="risk_notes"></textarea>
+      <label>Broker recommendation summary / 经纪人建议总结</label><textarea name="recommendation_summary"></textarea>
+    </section>
+
+    <section class="card section" data-title="Review / 提交">
+      <h2 class="section-title">11. Review & Submit / 复核与提交</h2>
+      <div class="grid">
+        <div class="metric"><span>Total Annual Income / 年收入合计</span><strong id="reviewIncome">$0</strong></div>
+        <div class="metric"><span>Total Assets / 总资产</span><strong id="reviewAssets">$0</strong></div>
+        <div class="metric"><span>Total Liabilities / 总负债</span><strong id="reviewLiab">$0</strong></div>
+        <div class="metric"><span>Monthly Expenses / 月支出</span><strong id="reviewExpenses">$0</strong></div>
+        <div class="metric"><span>Net Worth / 净资产</span><strong id="reviewNetWorth">$0</strong></div>
+        <div class="metric"><span>Estimated LVR / 估算LVR</span><strong id="reviewLvr">0%</strong></div>
+      </div>
+      <h3>Broker Summary Preview / 经纪人摘要预览</h3>
+      <div class="review-box" id="brokerSummaryPreview"></div>
+      <label><input type="checkbox" name="client_declaration"> I confirm the information provided is true and complete. / 我确认以上资料真实完整。</label>
+    </section>
+
+  </form>
+
+  <div class="nav-buttons">
+    <button type="button" class="light" onclick="prevStep()">← Previous / 上一步</button>
+    <button type="button" onclick="nextStep()">Next / 下一步 →</button>
+  </div>
+</div>
+
+<script>
+const STORAGE_KEY="upswing_client_application_v3";
+const POWER_AUTOMATE_WEBHOOK_URL=""; // Paste your Microsoft Power Automate webhook URL here.
+
+const form=document.getElementById("loanForm");
+const sections=Array.from(document.querySelectorAll(".section"));
+let currentStep=0;
+
+function buildStepper(){
+  const stepper=document.getElementById("stepper");
+  stepper.innerHTML="";
+  sections.forEach((s,i)=>{
+    const div=document.createElement("div");
+    div.className="step";
+    div.textContent=(i+1)+". "+s.dataset.title;
+    div.onclick=()=>goStep(i);
+    stepper.appendChild(div);
+  });
+}
+function updateStepper(){
+  document.querySelectorAll(".step").forEach((el,i)=>{
+    el.classList.toggle("active",i===currentStep);
+    el.classList.toggle("done",i<currentStep);
+  });
+}
+function goStep(i){
+  currentStep=Math.max(0,Math.min(sections.length-1,i));
+  sections.forEach((s,idx)=>s.classList.toggle("active",idx===currentStep));
+  updateStepper(); calc(); window.scrollTo({top:220,behavior:"smooth"});
+}
+function nextStep(){goStep(currentStep+1)}
+function prevStep(){goStep(currentStep-1)}
+
+function addRow(tableId, fields){
+  const tbody=document.querySelector("#"+tableId+" tbody");
+  const tr=document.createElement("tr");
+  fields.forEach(f=>{
+    const td=document.createElement("td");
+    const inp=document.createElement("input");
+    inp.name=f+"[]";
+    if(["amount","value","balance","limit","repayment","debt"].some(x=>f.includes(x))) inp.type="number";
+    inp.addEventListener("input",()=>{calc();autoSave();});
+    td.appendChild(inp);tr.appendChild(td);
+  });
+  const td=document.createElement("td");
+  const btn=document.createElement("button");
+  btn.type="button";btn.className="light";btn.textContent="Remove / 删除";
+  btn.onclick=()=>{tr.remove();calc();autoSave();}
+  td.appendChild(btn);tr.appendChild(td);tbody.appendChild(tr);
+}
+
+function money(n){return "$"+(Number(n)||0).toLocaleString(undefined,{maximumFractionDigits:0});}
+function sumByName(name){return Array.from(document.querySelectorAll(`[name="${name}[]"]`)).reduce((s,e)=>s+(Number(e.value)||0),0)}
+function val(name){let e=document.querySelector(`[name="${name}"]`);return e?Number(e.value)||0:0}
+function getData(){
+  const data={};
+  new FormData(form).forEach((v,k)=>{
+    if(k==="uploads") return;
+    if(k.endsWith("[]")){let key=k.slice(0,-2); if(!data[key]) data[key]=[]; data[key].push(v);}
+    else data[k]=v;
+  });
+  data._exported_at=new Date().toISOString();
+  data._portal_version="V3";
+  return data;
+}
+function setData(data){
+  Object.entries(data||{}).forEach(([k,v])=>{
+    if(Array.isArray(v)){
+      const fields=document.querySelectorAll(`[name="${k}[]"]`);
+      fields.forEach((e,i)=>{if(v[i]!=null)e.value=v[i]});
+    }else{
+      const e=document.querySelector(`[name="${k}"]`);
+      if(e){
+        if(e.type==="checkbox") e.checked=!!v;
+        else e.value=v;
+      }
+    }
+  });
+  calc();
+}
+function calc(){
+  const income=sumByName("income_amount");
+  const assets=sumByName("asset_value")+sumByName("sec_value");
+  const liab=sumByName("liab_balance")+sumByName("sec_debt");
+  const expenses=sumByName("expense_amount");
+  const netWorth=assets-liab;
+  const proposedLoan=val("proposed_loan") || val("requested_loan_amount");
+  const propertyValue=val("purchase_price") || sumByName("sec_value");
+  const lvr=propertyValue ? (proposedLoan/propertyValue*100) : 0;
+
+  const docNames=["doc_id","doc_payslip","doc_bank","doc_tax","doc_financials","doc_bas","doc_rental","doc_contract"];
+  const docs=docNames.filter(n=>document.querySelector(`[name="${n}"]`)?.checked).length;
+
+  const allInputs=Array.from(form.querySelectorAll("input:not([type=file]),select,textarea")).filter(e=>e.name && !e.name.endsWith("[]"));
+  const filled=allInputs.filter(e=>e.type==="checkbox"?e.checked:!!e.value).length;
+  const progress=Math.min(100,Math.round((filled/(allInputs.length||1))*100));
+
+  document.getElementById("dashProgress").textContent=progress+"%";
+  document.getElementById("dashDocs").textContent=docs+"/8";
+  document.getElementById("dashNetWorth").textContent=money(netWorth);
+  document.getElementById("dashLvr").textContent=lvr?lvr.toFixed(1)+"%":"0%";
+  document.getElementById("progressBar").style.width=progress+"%";
+  document.getElementById("progressLabel").textContent=progress+"% complete / 已完成 "+progress+"%";
+  document.getElementById("reviewIncome").textContent=money(income);
+  document.getElementById("reviewAssets").textContent=money(assets);
+  document.getElementById("reviewLiab").textContent=money(liab);
+  document.getElementById("reviewExpenses").textContent=money(expenses);
+  document.getElementById("reviewNetWorth").textContent=money(netWorth);
+  document.getElementById("reviewLvr").textContent=lvr?lvr.toFixed(1)+"%":"0%";
+  document.getElementById("brokerSummaryPreview").textContent=brokerSummaryText();
+}
+function brokerSummaryText(){
+  const d=getData();
+  return `Upswing Capital Broker Summary
+
+Application: ${d.application_number||""}
+Applicant 1: ${d.a1_name||""}
+Applicant 2: ${d.a2_name||""}
+Loan Purpose: ${d.loan_purpose||""}
+Requested Loan: ${money(d.requested_loan_amount||0)}
+Property Purpose: ${d.property_purpose||""}
+Target Lender: ${d.target_lender||""}
+
+Client Objectives:
+${d.client_objectives||""}
+
+Financial Snapshot:
+Total Annual Income: ${money(sumByName("income_amount"))}
+Total Assets: ${money(sumByName("asset_value")+sumByName("sec_value"))}
+Total Liabilities: ${money(sumByName("liab_balance")+sumByName("sec_debt"))}
+Monthly Expenses: ${money(sumByName("expense_amount"))}
+Net Worth: ${document.getElementById("dashNetWorth")?.textContent||"$0"}
+Estimated LVR: ${document.getElementById("dashLvr")?.textContent||"0%"}
+
+BID / Suitability Notes:
+${d.bid_notes||""}
+
+Risks / Disadvantages:
+${d.risk_notes||""}
+
+Broker Recommendation:
+${d.recommendation_summary||""}`;
+}
+function saveDraft(){localStorage.setItem(STORAGE_KEY,JSON.stringify(getData()));alert("Draft saved / 草稿已保存");}
+function loadDraft(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return alert("No draft found / 未找到草稿");setData(JSON.parse(raw));alert("Draft loaded / 草稿已读取");}
+function autoSave(){localStorage.setItem(STORAGE_KEY,JSON.stringify(getData()));}
+function downloadJSON(){
+  const blob=new Blob([JSON.stringify(getData(),null,2)],{type:"application/json;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(getData().application_number||"loan_application")+".json";a.click();
+}
+function downloadBrokerSummary(){
+  const blob=new Blob([brokerSummaryText()],{type:"text/plain;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(getData().application_number||"broker_summary")+"_broker_summary.txt";a.click();
+}
+async function submitPackage(){
+  calc();
+  document.querySelector('[name="application_status"]').value="Submitted / 已提交";
+  document.getElementById("dashStatus").textContent="Submitted";
+  const payload=getData();
+  if(POWER_AUTOMATE_WEBHOOK_URL){
+    try{
+      await fetch(POWER_AUTOMATE_WEBHOOK_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+      alert("Submitted to Microsoft 365 / 已提交到 Microsoft 365");
+    }catch(e){alert("Submission failed. Export JSON as backup. / 提交失败，请导出JSON备份");}
+  }else{
+    alert("Demo submit complete. No Microsoft 365 webhook connected yet. / 演示提交完成，尚未连接 Microsoft 365 webhook。");
+  }
+}
+form.addEventListener("input",()=>{calc();autoSave();});
+form.addEventListener("change",()=>{calc();autoSave();});
+["incomeTable","assetTable","liabilityTable","expenseTable","securityTable"].forEach(id=>{
+ const map={
+  incomeTable:["income_type","income_owner","income_amount","income_notes"],
+  assetTable:["asset_type","asset_desc","asset_value","asset_owner"],
+  liabilityTable:["liab_type","liab_lender","liab_limit","liab_balance","liab_repayment"],
+  expenseTable:["expense_category","expense_amount","expense_notes"],
+  securityTable:["sec_address","sec_type","sec_use","sec_value","sec_debt"]
+ };
+ addRow(id,map[id]);
+});
+buildStepper();
+goStep(0);
+calc();
+</script>
+</body>
+</html>
