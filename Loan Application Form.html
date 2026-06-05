@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Upswing Capital Master Loan Application / 贷款申请资料收集表</title>
+<style>
+:root{
+  --ink:#111; --muted:#666; --line:#d9d9d9; --bg:#f7f7f7; --card:#fff;
+}
+*{box-sizing:border-box}
+body{font-family:Arial,"Microsoft YaHei","PingFang SC",sans-serif;margin:0;background:var(--bg);color:var(--ink)}
+header{background:#111;color:#fff;padding:26px 34px}
+header h1{margin:0;font-size:25px}
+header p{margin:8px 0 0;color:#ddd}
+.container{max-width:1180px;margin:24px auto;padding:0 18px}
+.toolbar{position:sticky;top:0;background:rgba(247,247,247,.95);padding:12px 0;z-index:10;border-bottom:1px solid var(--line)}
+button{background:#111;color:#fff;border:0;border-radius:8px;padding:10px 14px;margin:4px;cursor:pointer}
+button.secondary{background:#555}
+button.light{background:#fff;color:#111;border:1px solid #aaa}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:18px 0;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+h2{font-size:20px;margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:10px}
+h3{font-size:16px;margin:20px 0 8px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:4px}
+input,select,textarea{width:100%;border:1px solid #cfcfcf;border-radius:8px;padding:9px;background:#fff;font-size:14px}
+textarea{min-height:80px;resize:vertical}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top}
+th{background:#f0f0f0;font-size:13px}
+td input,td select{border:0;padding:6px;border-radius:0}
+.small{font-size:12px;color:var(--muted)}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.metric{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fafafa}
+.metric strong{display:block;font-size:20px;margin-top:6px}
+.badge{display:inline-block;padding:3px 8px;border:1px solid #aaa;border-radius:999px;font-size:12px;margin-left:6px;color:#333}
+@media(max-width:850px){.grid,.grid2,.summary{grid-template-columns:1fr}}
+@media print{.toolbar,button{display:none}.card{break-inside:avoid}body{background:white}.container{max-width:none}}
+</style>
+</head>
+<body>
+<header>
+<h1>Upswing Capital Master Loan Application <span class="badge">中英双语</span></h1>
+<p>Professional client intake form for lender applications, fact find, servicing summary and broker notes. / 专业客户进件表，可用于后续填充各类 lender application。</p>
+</header>
+
+<div class="container">
+<div class="toolbar">
+<button onclick="window.print()">Print / 保存PDF</button>
+<button class="secondary" onclick="downloadJSON()">Export JSON / 导出JSON</button>
+<button class="light" onclick="clearForm()">Clear / 清空</button>
+<span class="small">Tip: complete once, export JSON, then map to lender forms. / 客户填一次，之后可映射到不同银行或非银表格。</span>
+</div>
+
+<form id="loanForm">
+
+<section class="card">
+<h2>1. Broker & Application Summary / 经纪人与申请概要</h2>
+<div class="grid">
+<div><label>Application Reference / 申请编号</label><input name="application_ref"></div>
+<div><label>Broker Name / 经纪人</label><input name="broker_name" value="Rui Zhang"></div>
+<div><label>Business / 公司</label><input name="broker_business" value="Upswing Capital"></div>
+<div><label>Date / 日期</label><input type="date" name="application_date"></div>
+<div><label>Application Type / 申请类型</label><select name="application_type"><option></option><option>Individual / 个人</option><option>Joint / 联名</option><option>Company / 公司</option><option>Trust / 信托</option><option>SMSF / 自管养老金</option></select></div>
+<div><label>Target Lender / 目标贷款机构</label><input name="target_lender"></div>
+</div>
+</section>
+
+<section class="card">
+<h2>2. Loan Purpose & Product Requirement / 贷款目的与产品需求</h2>
+<div class="grid">
+<div><label>Loan Purpose / 贷款用途</label><select name="loan_purpose"><option></option><option>Purchase / 购房</option><option>Refinance / 转贷</option><option>Equity Release / 释放净值</option><option>Construction / 建房</option><option>Commercial / 商业贷款</option><option>SMSF / SMSF贷款</option><option>Debt Consolidation / 债务整合</option><option>Other / 其他</option></select></div>
+<div><label>Requested Loan Amount / 申请贷款金额</label><input type="number" name="requested_loan_amount" class="money"></div>
+<div><label>Loan Term / 贷款年限</label><input name="loan_term" placeholder="e.g. 30 years / 30年"></div>
+<div><label>Repayment Type / 还款方式</label><select name="repayment_type"><option></option><option>Principal & Interest / 本息同还</option><option>Interest Only / 只还利息</option><option>Split / 混合</option></select></div>
+<div><label>Rate Type / 利率类型</label><select name="rate_type"><option></option><option>Variable / 浮动</option><option>Fixed / 固定</option><option>Split / 混合</option></select></div>
+<div><label>Occupancy / 用途</label><select name="occupancy"><option></option><option>Owner Occupied / 自住</option><option>Investment / 投资</option><option>Mixed / 混合</option></select></div>
+</div>
+<label>Client objectives and requirements / 客户目标和需求</label>
+<textarea name="client_objectives" placeholder="Example: reduce rate, cash-out for business, purchase investment property... / 例如：降低利率、套现用于生意、购买投资房等"></textarea>
+</section>
+
+<section class="card">
+<h2>3. Applicant 1 / 申请人1</h2>
+<div class="grid">
+<div><label>Full Name / 姓名</label><input name="a1_full_name"></div>
+<div><label>Date of Birth / 出生日期</label><input type="date" name="a1_dob"></div>
+<div><label>Marital Status / 婚姻状况</label><select name="a1_marital"><option></option><option>Single / 单身</option><option>Married / 已婚</option><option>De facto / 同居伴侣</option><option>Divorced / 离异</option><option>Separated / 分居</option><option>Widowed / 丧偶</option></select></div>
+<div><label>Mobile / 手机</label><input name="a1_mobile"></div>
+<div><label>Email / 邮箱</label><input type="email" name="a1_email"></div>
+<div><label>Residency Status / 居留身份</label><select name="a1_residency"><option></option><option>Australian Citizen / 澳洲公民</option><option>Permanent Resident / 永居</option><option>Temporary Visa / 临时签证</option><option>Foreign Citizen / 外籍</option></select></div>
+<div><label>Current Address / 现居地址</label><input name="a1_address"></div>
+<div><label>Driver Licence / 驾照号</label><input name="a1_licence"></div>
+<div><label>Dependants / 受抚养人数</label><input type="number" name="a1_dependants"></div>
+</div>
+<h3>Employment / 工作情况</h3>
+<div class="grid">
+<div><label>Employment Type / 雇佣类型</label><select name="a1_employment_type"><option></option><option>PAYG / 雇员</option><option>Self-employed / 自雇</option><option>Company Director / 公司董事</option><option>Contractor / 合同工</option><option>Casual / 临时工</option><option>Retired / 退休</option></select></div>
+<div><label>Employer / Business / 雇主或公司</label><input name="a1_employer"></div>
+<div><label>Occupation / 职位</label><input name="a1_occupation"></div>
+<div><label>Time in Role / 当前工作时长</label><input name="a1_time_in_role"></div>
+<div><label>Annual Gross Income / 年税前收入</label><input type="number" name="a1_income" class="money income"></div>
+<div><label>ABN if Self-employed / ABN（自雇）</label><input name="a1_abn"></div>
+</div>
+</section>
+
+<section class="card">
+<h2>4. Applicant 2 / 申请人2</h2>
+<div class="grid">
+<div><label>Full Name / 姓名</label><input name="a2_full_name"></div>
+<div><label>Date of Birth / 出生日期</label><input type="date" name="a2_dob"></div>
+<div><label>Marital Status / 婚姻状况</label><input name="a2_marital"></div>
+<div><label>Mobile / 手机</label><input name="a2_mobile"></div>
+<div><label>Email / 邮箱</label><input type="email" name="a2_email"></div>
+<div><label>Annual Gross Income / 年税前收入</label><input type="number" name="a2_income" class="money income"></div>
+</div>
+<label>Applicant 2 notes / 申请人2备注</label><textarea name="a2_notes"></textarea>
+</section>
+
+<section class="card">
+<h2>5. Company / Trust / SMSF / 公司、信托或SMSF</h2>
+<div class="grid">
+<div><label>Entity Name / 实体名称</label><input name="entity_name"></div>
+<div><label>ABN / ACN</label><input name="entity_abn_acn"></div>
+<div><label>Entity Type / 类型</label><select name="entity_type"><option></option><option>Company / 公司</option><option>Family Trust / 家庭信托</option><option>Unit Trust / 单位信托</option><option>SMSF / 自管养老金</option></select></div>
+<div><label>Directors / 董事</label><input name="entity_directors"></div>
+<div><label>Shareholders / Beneficiaries / 股东或受益人</label><input name="entity_shareholders"></div>
+<div><label>Accountant Contact / 会计联系方式</label><input name="accountant_contact"></div>
+</div>
+</section>
+
+<section class="card">
+<h2>6. Income / 收入明细</h2>
+<table id="incomeTable"><thead><tr><th>Type / 类型</th><th>Owner / 所属人</th><th>Amount Annual / 年金额</th><th>Notes / 备注</th><th></th></tr></thead><tbody></tbody></table>
+<button type="button" onclick="addRow('incomeTable',['income_type','income_owner','income_amount','income_notes'], true)">+ Add Income / 添加收入</button>
+</section>
+
+<section class="card">
+<h2>7. Assets / 资产</h2>
+<table id="assetTable"><thead><tr><th>Asset Type / 资产类型</th><th>Description / 描述</th><th>Value / 价值</th><th>Ownership / 所属</th><th></th></tr></thead><tbody></tbody></table>
+<button type="button" onclick="addRow('assetTable',['asset_type','asset_desc','asset_value','asset_owner'], true)">+ Add Asset / 添加资产</button>
+</section>
+
+<section class="card">
+<h2>8. Liabilities / 负债</h2>
+<table id="liabilityTable"><thead><tr><th>Type / 类型</th><th>Lender / 贷款机构</th><th>Limit / 额度</th><th>Balance / 余额</th><th>Monthly Repayment / 月供</th><th></th></tr></thead><tbody></tbody></table>
+<button type="button" onclick="addRow('liabilityTable',['liab_type','liab_lender','liab_limit','liab_balance','liab_repayment'], true)">+ Add Liability / 添加负债</button>
+</section>
+
+<section class="card">
+<h2>9. Living Expenses / 生活支出</h2>
+<table id="expenseTable"><thead><tr><th>Category / 类别</th><th>Monthly Amount / 月金额</th><th>Notes / 备注</th><th></th></tr></thead><tbody></tbody></table>
+<button type="button" onclick="addRow('expenseTable',['expense_category','expense_amount','expense_notes'], true)">+ Add Expense / 添加支出</button>
+</section>
+
+<section class="card">
+<h2>10. Security Property / 抵押物业</h2>
+<table id="securityTable"><thead><tr><th>Address / 地址</th><th>Property Type / 类型</th><th>Use / 用途</th><th>Estimated Value / 估值</th><th>Existing Debt / 现有贷款</th><th></th></tr></thead><tbody></tbody></table>
+<button type="button" onclick="addRow('securityTable',['sec_address','sec_type','sec_use','sec_value','sec_debt'], true)">+ Add Property / 添加物业</button>
+</section>
+
+<section class="card">
+<h2>11. Loan Structure & Funding Worksheet / 贷款结构与资金用途表</h2>
+<div class="grid">
+<div><label>Purchase Price / 购买价</label><input type="number" name="purchase_price" class="money calc"></div>
+<div><label>Stamp Duty / 印花税</label><input type="number" name="stamp_duty" class="money calc"></div>
+<div><label>Legal / Conveyancing / 律师费</label><input type="number" name="legal_cost" class="money calc"></div>
+<div><label>Other Costs / 其他费用</label><input type="number" name="other_costs" class="money calc"></div>
+<div><label>Deposit / Contribution / 首付或自有资金</label><input type="number" name="deposit" class="money calc"></div>
+<div><label>Loan Amount / 贷款金额</label><input type="number" name="worksheet_loan_amount" class="money calc"></div>
+</div>
+<div class="summary" style="margin-top:14px">
+<div class="metric">Total Funds Required / 总资金需求<strong id="totalRequired">$0</strong></div>
+<div class="metric">Total Contribution / 自有资金<strong id="totalContribution">$0</strong></div>
+<div class="metric">Estimated LVR / 估算LVR<strong id="lvr">0%</strong></div>
+<div class="metric">Net Worth / 净资产<strong id="netWorth">$0</strong></div>
+</div>
+</section>
+
+<section class="card">
+<h2>12. Compliance / Best Interest Duty / 合规与客户最佳利益</h2>
+<label>Why this product/lender is suitable / 为什么该产品或贷款机构适合客户</label>
+<textarea name="suitability_notes"></textarea>
+<label>Risks, disadvantages and client discussion / 风险、缺点及已与客户讨论事项</label>
+<textarea name="risk_notes"></textarea>
+<label>Broker recommendation summary / 经纪人建议总结</label>
+<textarea name="broker_recommendation"></textarea>
+</section>
+
+<section class="card">
+<h2>13. Supporting Documents Checklist / 材料清单</h2>
+<div class="grid2">
+<label><input type="checkbox" name="doc_id"> ID / 身份证件</label>
+<label><input type="checkbox" name="doc_payslip"> Payslips / 工资单</label>
+<label><input type="checkbox" name="doc_bank"> Bank Statements / 银行流水</label>
+<label><input type="checkbox" name="doc_tax"> Tax Returns / 税表</label>
+<label><input type="checkbox" name="doc_financials"> Company Financials / 公司财报</label>
+<label><input type="checkbox" name="doc_bas"> BAS / GST申报</label>
+<label><input type="checkbox" name="doc_rental"> Rental Statements / 租金证明</label>
+<label><input type="checkbox" name="doc_contract"> Contract of Sale / 购房合同</label>
+</div>
+<label>Additional documents required / 其他所需材料</label>
+<textarea name="additional_docs"></textarea>
+</section>
+
+</form>
+</div>
+
+<script>
+function currency(n){return "$" + (Number(n)||0).toLocaleString(undefined,{maximumFractionDigits:0});}
+function addRow(tableId, fields, numeric=false){
+  const tbody=document.querySelector("#"+tableId+" tbody");
+  const tr=document.createElement("tr");
+  fields.forEach((f,i)=>{
+    const td=document.createElement("td");
+    const inp=document.createElement("input");
+    inp.name=f+"[]";
+    if(numeric && (f.includes("amount")||f.includes("value")||f.includes("balance")||f.includes("limit")||f.includes("repayment")||f.includes("debt"))) inp.type="number";
+    inp.addEventListener("input", calc);
+    td.appendChild(inp); tr.appendChild(td);
+  });
+  const td=document.createElement("td");
+  const btn=document.createElement("button"); btn.type="button"; btn.textContent="Remove / 删除"; btn.className="light";
+  btn.onclick=()=>{tr.remove();calc();}
+  td.appendChild(btn); tr.appendChild(td); tbody.appendChild(tr);
+}
+["incomeTable","assetTable","liabilityTable","expenseTable","securityTable"].forEach((id)=>{
+  const map={
+    incomeTable:['income_type','income_owner','income_amount','income_notes'],
+    assetTable:['asset_type','asset_desc','asset_value','asset_owner'],
+    liabilityTable:['liab_type','liab_lender','liab_limit','liab_balance','liab_repayment'],
+    expenseTable:['expense_category','expense_amount','expense_notes'],
+    securityTable:['sec_address','sec_type','sec_use','sec_value','sec_debt']
+  };
+  addRow(id,map[id],true);
+});
+document.querySelectorAll("input,select,textarea").forEach(el=>el.addEventListener("input",calc));
+function sumByName(name){return Array.from(document.querySelectorAll(`[name="${name}[]"]`)).reduce((s,e)=>s+(Number(e.value)||0),0);}
+function val(name){const e=document.querySelector(`[name="${name}"]`);return e?Number(e.value)||0:0;}
+function calc(){
+  const totalReq=val("purchase_price")+val("stamp_duty")+val("legal_cost")+val("other_costs");
+  const contribution=val("deposit");
+  const loan=val("worksheet_loan_amount")||val("requested_loan_amount");
+  const propertyValue=val("purchase_price") || sumByName("sec_value");
+  const assets=sumByName("asset_value")+sumByName("sec_value");
+  const debts=sumByName("liab_balance")+sumByName("sec_debt");
+  document.getElementById("totalRequired").textContent=currency(totalReq);
+  document.getElementById("totalContribution").textContent=currency(contribution);
+  document.getElementById("lvr").textContent=propertyValue?((loan/propertyValue)*100).toFixed(1)+"%":"0%";
+  document.getElementById("netWorth").textContent=currency(assets-debts);
+}
+function formDataJSON(){
+  const data={};
+  new FormData(document.getElementById("loanForm")).forEach((v,k)=>{
+    if(k.endsWith("[]")){
+      const key=k.slice(0,-2); if(!data[key]) data[key]=[]; data[key].push(v);
+    } else { data[k]=v; }
+  });
+  return data;
+}
+function downloadJSON(){
+  const blob=new Blob([JSON.stringify(formDataJSON(),null,2)],{type:"application/json;charset=utf-8"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="loan_application_export.json"; a.click();
+}
+function clearForm(){ if(confirm("Clear all fields? / 确认清空？")) document.getElementById("loanForm").reset(); calc();}
+calc();
+</script>
+</body>
+</html>
