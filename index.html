@@ -473,7 +473,13 @@ button,.btn-primary{
 <div><label>Primary Contact</label><input autocomplete="name" id="primaryContact" name="primaryContact" placeholder="John Smith" oninput="syncPrimaryContactToFirstApplicant()"/></div>
 <div><label>Primary Contact Email</label><input autocomplete="email" id="primaryEmail" name="primaryEmail" placeholder="john@email.com" type="email" oninput="syncPrimaryContactToFirstApplicant()"/></div>
 <div><label>Primary Contact Phone</label><input autocomplete="tel" id="primaryPhone" name="primaryPhone" placeholder="0400 000 000" type="tel" oninput="syncPrimaryContactToFirstApplicant()"/></div>
-<div><label>Target Settlement / Deadline</label><input name="targetDate" type="date"/></div>
+<div><label><div><label>Broker Name</label><input autocomplete="name" name="brokerName" placeholder="Broker or referrer name (optional)"/></div>
+<div><label>Broker Email</label><input autocomplete="email" name="brokerEmail" placeholder="broker@email.com" type="email"/></div>
+<div><label>Broker Phone</label><input autocomplete="tel" name="brokerPhone" placeholder="0400 000 000" type="tel"/></div>
+  const brokerName = document.querySelector('[name="brokerName"]')?.value?.trim() || getFieldValueByLabel('Broker Name');
+  const brokerEmail = document.querySelector('[name="brokerEmail"]')?.value?.trim() || getFieldValueByLabel('Broker Email');
+  const brokerPhone = document.querySelector('[name="brokerPhone"]')?.value?.trim() || getFieldValueByLabel('Broker Phone');
+  const caseName = document.querySelector('[name="caseName"]')?.value?.trim() || getFieldValueByLabel('Case Name') || 'Loan Application';</label><input name="targetDate" type="date"/></div>
 </div>
 <h3>Overall Application Purpose</h3>
 <div class="checkbox-grid">
@@ -1202,7 +1208,10 @@ function buildApplicationPayload(){
   const customerName = document.querySelector('[name="primaryContact"]')?.value?.trim() || getFieldValueByLabel('Primary Contact') || 'New Customer';
   const customerEmail = document.querySelector('[name="primaryEmail"]')?.value?.trim() || getFieldValueByLabel('Primary Contact Email');
   const phone = document.querySelector('[name="primaryPhone"]')?.value?.trim() || getFieldValueByLabel('Primary Contact Phone');
-  const caseName = document.querySelector('[name="caseName"]')?.value?.trim() || getFieldValueByLabel('Case Name') || 'Loan Application';
+    brokerName,
+    brokerEmail,
+    brokerPhone,
+    targetDate: document.querySelector('[name="targetDate"]')?.value || '',
   const clientGroupName = document.querySelector('[name="clientGroupName"]')?.value?.trim() || getFieldValueByLabel('Client Group Name');
   const safeCustomerName = customerName.replace(/[\\/:*?"<>|#%{}~&]/g, '-').replace(/\s+/g, ' ').trim();
 
